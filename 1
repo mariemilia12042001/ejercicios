@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <math.h>
+int validarN(int numDiscos); 
+int elegirDisco(int i);
+void elegirTorre(int numDiscos, int disco); 
+int esPar(int numero); 
+int main(){
+
+	int numDiscos, valida, numMovimientos, i, disco; 
+	
+	printf("Ingrese el número de discos: "); 
+	scanf("%d", &numDiscos); 
+	
+	valida = validarN(numDiscos); 
+	
+	if (valida){
+		
+		numMovimientos = pow(2, numDiscos) - 1;
+		printf("Número de movimientos: %d\n", numMovimientos); 
+		
+		for(i=1; i<= numMovimientos; i++){
+			disco = elegirDisco(i); 
+			printf("Movimiento: %d | Disco a mover: %d | ", i, disco);
+			elegirTorre(numDiscos, disco);
+		}
+		
+	} else if (valida == 2){
+		printf("El número de discos no puede ser 0");
+	} else if (valida == 3){
+		printf("El número de discos no puede ser negativo"); 
+	}
+}
+
+int validarN(int numDiscos){
+	int valido; 
+	if (numDiscos > 0){
+		valido = 1; 
+	} else if (numDiscos == 0){
+		valido = 2; 
+	} else if (numDiscos < 0){
+		valido = 3;
+	}
+	return valido; 
+}
+
+int elegirDisco(int i){
+	int doble, n, potencia, exponente; 
+	
+	doble = 2 * i;
+	
+	n = 1;
+	potencia = 2; 
+	
+	while (potencia <= doble){
+		
+		if (doble % potencia == 0){
+			exponente = n; 
+		}
+		
+		n++;
+		potencia = pow(2, n); ; 
+	}
+	
+	return exponente; 
+	
+}
+
+void elegirTorre(int numDiscos, int disco){
+	int esparNumDiscos, esparDisco; 
+	
+	esparNumDiscos =esPar(numDiscos); 
+	esparDisco = esPar(disco); 
+	
+	if ((esparNumDiscos && esparDisco) || (esparNumDiscos == 0 && esparDisco== 0)){
+		printf("Torre destino: Debe usar la serie A130784\n"); 
+	} else {
+		printf("Torre destino: Debe usar la serie A010882\n"); 
+	}
+}
+
+int esPar(int numero){
+	int par;
+	if (numero % 2 == 0){
+		par = 1;
+	} else {
+		par = 0; 
+	}
+	return par; 
